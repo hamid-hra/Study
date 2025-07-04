@@ -8,5 +8,23 @@
 <body>
     {% include 'navbar.html' %}
     <h1 style="color:yellowgreen">My Home</h1>
+<div>
+        <a href="{% url 'create-room' %}">create Room</a>
+        <div>
+        {% for room in rooms %}
+            <div>
+                <span>@{{room.host.username}}</span>
+                <h5>
+                    {{room.id}} -- 
+                    <a href="/room/{{room.id}}">
+                        {{room.name}}
+                    </a> 
+                </h5>
+                <small>@{{room.topic.name}}</small>
+                <hr>
+            {%endfor%}           
+        </div>
+</div>
+</div>
 </body>
 </html>
