@@ -4,15 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room</title>
+    <style>
+        .home-container{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+        }
+    </style>
 </head>
 <body>
     {% include 'navbar.html' %}
     <h1 style="color:yellowgreen">My Home</h1>
-<div>
+    <div>
         <a href="{% url 'create-room' %}">create Room</a>
+    </div>
+<div class="home-container">
+    <div>
+        <hr>
+        <h3>Browse Topic</h3>
+        <div>
+            <a href="{% url 'Home' %}">All</a>
+        </div>
+
+        {% for topic in topics %}
+        <div>
+            <a href="{% url 'Home' %}?q={{topic.name}}">{{topic.name}}</a>
+        </div>
+        {% endfor %}
+        <hr>
+    </div>
+    <div>
         <div>
         {% for room in rooms %}
             <div>
+                <a href="{% url 'Update-room' room.id %}">Edit</a>
+                <a href="{% url 'Delete-room' room.id %}">Delete</a>
                 <span>@{{room.host.username}}</span>
                 <h5>
                     {{room.id}} -- 
@@ -24,7 +49,10 @@
                 <hr>
             {%endfor%}           
         </div>
+
 </div>
+    </div>
+        
 </div>
 </body>
 </html>
