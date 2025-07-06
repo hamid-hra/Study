@@ -9,7 +9,24 @@
 <a href="/">
     <h1>LOGO</h1>
 </a>
+<form method="get" action="{% url 'Home' %}">
+    <input type="text" name="q" placeholder="Search Room ..." />
+    {%csrf_token%}
+</form>
+{% if request.user.is_authenticated %}
+<a href="{%url 'logout'%}">logout</a>
+{% else %}
+<a href="{%url 'login'%}">Login</a>
+{% endif %}
 </hr>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+            {% endfor %}
+    </ul>
+{% endif %}
+
 {% block content %}
 
 {% endblock content %}
