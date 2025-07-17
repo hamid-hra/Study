@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Room</title>
-</head>
-<body>
+    <style>
+      .room-container {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 20px;
+      }
+    </style>
+  </head>
+  <body>
     {% include 'navbar.html' %}
-    <h1 style="color: blueviolet;">{{room.name}}</h1>
-    <h2 style="color : yellowgreen">{{room.description}}</h2>
-</body>
+    <div class="room-container">
+      <div>
+        <h1 style="color: blueviolet">{{ room.name }}</h1>
+        <h2 style="color: yellowgreen">{{ room.description }}</h2>
+
+        <div class="comment-wrapper">
+          <h3>Conversation</h3>
+          <hr />
+          {% for message in room_messages %}
+            <div>
+                {% if request.user == message.user %}
+                <a href="{% url 'Delete-message' message.id %}">Delete</a>
+                {% endif %}
+              <small>
+                @{{ message.user }} {{ message.created|timesince }} ago ...
+              </small>
+              <p>{{ message.body }}</p>
+              <hr />
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if request.user.is_authenticated %}
+          <div class="comment-form">
+            <form method="POST" action="">
+              {% csrf_token %}
+              <input
+                type="text"
+                placeholder="Write your message here ..."
+                name="body"
+              />
+            </form>
+          </div>
+        {% endif %}
+      </div>
+      <div>
+        <h3>Participants</h3>
+        <hr />
+        {% for user in participants %}
+          <p>@{{ user.username }}</p>
+        {% empty %}
+          <p>No participants yet.</p>
+        {% endfor %}
+      </div>
+    </div>
+  </body>
 </html>
