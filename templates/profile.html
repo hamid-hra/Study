@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room</title>
+    <title>Document</title>
     <style>
-        .home-container {
+        .profile-container{
             display: grid;
             grid-template-columns: 1fr 3fr 1fr;
         }
@@ -13,26 +13,20 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-
-    <div>
-        <a href="{% url 'create-room' %}">create Room</a>
-    </div>
-
-    <div class="home-container">
-        <!-- Left Sidebar -->
+    <h1>{{user.username}}</h1>
+    <div class="profile-container">
         <div>
-                {% include 'topics_component.html' %}
+            {% include 'topics_component.html' %}
         </div>
 
-        <!-- Center Content -->
         <div>
-            <h5>{{ room_count }} rooms available</h5>
-            {% include 'feed_component.html' %}
+            {% include 'feed_component.html'%}
         </div>
-        <!-- Right Content -->
+
         <div>
             {% include 'activity_component.html' %}
         </div>
     </div>
+
 </body>
 </html>
