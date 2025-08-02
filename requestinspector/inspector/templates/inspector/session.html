@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Request Inspector</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const log = document.getElementById("log");
+            const socket = new WebSocket(`ws://${location.host}/ws/{{ session_id }}/`);
+            socket.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                const entry = document.createElement("pre");
+                entry.textContent = JSON.stringify(data, null, 2);
+                log.prepend(entry);
+            };
+        });
+    </script>
+</head>
+<body style="background:#111;color:#eee;font-family:monospace">
+    <h1>Session: {{ session_id }}</h1>
+    <p>Send requests to: <code>/hook/{{ session_id }}/</code></p>
+    <div id="log"></div>
+</body>
+</html>

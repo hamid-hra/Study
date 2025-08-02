@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Request Inspector</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>body { background: #111; color: #fff; padding: 20px; }</style>
+</head>
+<body>
+  <h1>Session ID: {{ session_id }}</h1>
+  <p>Webhook URL: <code>http://localhost:8000/hook/{{ session_id }}/</code></p>
+  <div id="requests">
+    {% for req in requests %}
+    <div class="card bg-dark text-white my-2">
+      <div class="card-body">
+        <h5>{{ req.method }} <small class="text-muted">{{ req.timestamp }}</small></h5>
+        <pre>{{ req.body }}</pre>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</body>
+</html>
